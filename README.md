@@ -39,3 +39,22 @@ docker exec -it kafka kafka-topics \
 You should see:
 
 PaymentCreated
+
+a good payment below: 
+{
+  "orderId": "ORD123456",
+  "amount": 150.75,
+  "customerId": "CUST987654",
+  "paymentMethod": "CREDIT_CARD",
+  "cardNumber": "4111111111111111",
+  "cardExpiry": "12/28",
+  "cardCvv": "123",
+  "status": "PENDING",
+  "description": "Pagamento de teste",
+  "transactionId": "TXN20260214001",
+  "billingAddress": "Rua Exemplo, 123, São Paulo, SP",
+  "shippingAddress": "Rua Exemplo, 123, São Paulo, SP",
+  "customerEmail": "cliente@example.com",
+  "customerPhone": "+5511999999999",
+  "authorizationCode": "AUTH20260214"
+}

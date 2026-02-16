@@ -1,6 +1,7 @@
 package com.payment.domain.model;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 import com.payment.adapter.dto.PaymentDto;
 
@@ -22,6 +23,7 @@ public class PaymentEvent {
     private String customerPhone;
     private String authorizationCode;
     private String eventId;
+    private String timestamp;
 
    
 
@@ -43,6 +45,7 @@ public class PaymentEvent {
         this.customerPhone = dto.getCustomerPhone();
         this.authorizationCode = dto.getAuthorizationCode();
         this.eventId = java.util.UUID.randomUUID().toString(); //IDEMPOTENCIA
+        this.timestamp = LocalDateTime.now().toString();
     }
     public String getPaymentMethod() {
         return this.paymentMethod;
@@ -170,6 +173,14 @@ public class PaymentEvent {
 
     public void setEventId(String eventId) {
         this.eventId = eventId;
+    }
+
+    public String getTimestamp() {
+        return this.timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp; 
     }
 
 

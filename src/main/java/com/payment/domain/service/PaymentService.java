@@ -4,6 +4,8 @@ import com.payment.domain.model.PaymentEvent;
 import com.payment.domain.port.CreatePaymentEventUseCase;
 import com.payment.domain.port.PaymentEventPublisher;
 
+import jakarta.transaction.Transactional;
+
 //This is the service class that implements the use case to create a payment event, it will contain the business logic related to creating a payment event, and it will use the PaymentEventPublisher to publish the event to Kafka.
 public class PaymentService implements CreatePaymentEventUseCase {
     //When we use hexagonal architecture we want to decouple the domain logic from the infrastructure, so we use a port to define the interface for the infrastructure to implement, and then we use a service class to implement the business logic and use the port to interact with the infrastructure.
@@ -15,9 +17,11 @@ public class PaymentService implements CreatePaymentEventUseCase {
     }
 
     @Override
-    public void createPaymentEvent(PaymentEvent paymentEvent) {    
-        // Publish the payment event using the publisher
-        paymentEventPublisher.publish(paymentEvent);
+    @Transactional
+    public void createPaymentEvent(PaymentEvent paymentEvent) {   
+        
+        // save the payment in a outbox table in the same transaction, the OutboxProcessor will later read these entities and publish them to Kafka. This way we ensure that the payment event is published to Kafka only if the payment is successfully saved in the database, and we also ensure that we don't lose any events in case of a failure.
+        paymentEventPublisher.savePaymentEvent(paymentEvent);
     }
 
 }

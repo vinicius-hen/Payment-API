@@ -4,4 +4,5 @@ import com.payment.domain.model.PaymentEvent;
 
 public interface CreatePaymentEventUseCase {
     void createPaymentEvent(PaymentEvent paymentEvent);
+    
 }

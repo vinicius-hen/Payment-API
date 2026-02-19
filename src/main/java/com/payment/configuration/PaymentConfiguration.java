@@ -2,10 +2,9 @@ package com.payment.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.kafka.core.KafkaTemplate;
 
-import com.payment.adapter.outbound.kafka.KafkaPaymentEventPublisher;
-import com.payment.domain.model.PaymentEvent;
+import com.payment.adapter.outbound.outbox.OutboxRepository;
+import com.payment.adapter.outbound.outbox.OutboxService;
 import com.payment.domain.port.CreatePaymentEventUseCase;
 import com.payment.domain.port.PaymentEventPublisher;
 import com.payment.domain.service.PaymentService;
@@ -19,7 +18,7 @@ public class PaymentConfiguration {
     }
 
     @Bean
-    public PaymentEventPublisher paymentEventPublisher(KafkaTemplate<String, PaymentEvent> kafkaTemplate) {
-        return new KafkaPaymentEventPublisher(kafkaTemplate);
+    public PaymentEventPublisher paymentEventPublisher(OutboxRepository outboxRepository) {
+        return new OutboxService(outboxRepository);
     }
 }
